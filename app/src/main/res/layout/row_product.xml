@@ -21,7 +21,7 @@
             app:layout_constraintGuide_percent="0.45" />
 
         <TextView
-            android:id="@+id/lblWorkerName"
+            android:id="@+id/lblProductName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -36,29 +36,19 @@
 
 
         <TextView
-            android:id="@+id/lblMovieDate"
+            android:id="@+id/lblPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="valor"
-            app:layout_constraintEnd_toEndOf="@+id/lblWorkerName"
-            app:layout_constraintStart_toStartOf="@+id/lblWorkerName"
-            app:layout_constraintTop_toBottomOf="@+id/lblWorkerName"
+            app:layout_constraintEnd_toEndOf="@+id/lblProductName"
+            app:layout_constraintStart_toStartOf="@+id/lblProductName"
+            app:layout_constraintTop_toBottomOf="@+id/lblProductName"
             tools:text="9999999999" />
 
-        <TextView
-            android:id="@+id/lblMovieVote"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="valor2"
-            app:layout_constraintEnd_toEndOf="@+id/lblWorkerName"
-            app:layout_constraintStart_toStartOf="@+id/lblWorkerName"
-            app:layout_constraintTop_toBottomOf="@+id/lblMovieDate"
-            tools:text="9999999999" />
 
         <ImageView
-            android:id="@+id/imgMovie"
+            android:id="@+id/imgProduct"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="8dp"

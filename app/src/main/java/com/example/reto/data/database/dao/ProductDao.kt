@@ -1,5 +1,6 @@
 package com.example.reto.data.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,8 +10,8 @@ import com.example.reto.data.database.entities.Product
 @Dao
 interface ProductDao {
     @Query("SELECT * FROM products")
-    fun getAllProducts(): List<Product>
+    fun getAllProducts(): LiveData<List<Product>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProduct(product: Product)
+    suspend fun insertAll(products: List<Product>)
 }

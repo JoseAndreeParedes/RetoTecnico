@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import java.io.Serializable
 
 @Entity(tableName = "products")
 data class Product(
@@ -17,4 +18,4 @@ data class Product(
     @ColumnInfo(name = "creationAt") val creationAt: String,
     @ColumnInfo(name = "updatedAt") val updatedAt: String,
     @ColumnInfo(name = "category_id") val categoryId: Int
-)
+): Serializable
