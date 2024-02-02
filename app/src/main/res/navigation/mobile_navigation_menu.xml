@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/productListFragment"
         android:name="com.example.reto.ui.productlist.ProductListFragment"
-        android:label="ProductListFragment"
+        android:label="Reto Tecnico"
         tools:layout="@layout/fragment_product_list">
         <action
             android:id="@+id/action_productListFragment_to_productDetailFragment"
@@ -17,10 +17,12 @@
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.example.reto.ui.producdetail.ProductDetailFragment"
-        android:label="ProductDetails"
+        android:label="Producto Detalles"
         tools:layout="@layout/fragment_product_detail">
         <argument
             android:name="product"
-            app:argType="com.example.reto.data.database.entities.Product" />
+            app:argType="com.example.reto.data.database.entities.Product"
+            android:defaultValue="@null"
+            app:nullable="true"/>
     </fragment>
 </navigation>

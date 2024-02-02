@@ -9,6 +9,9 @@ import com.example.reto.data.database.data.toProductEntity
 import com.example.reto.data.database.entities.Category
 import com.example.reto.data.database.entities.Product
 import com.example.reto.network.ApiService
+import kotlinx.coroutines.flow.Flow
+import org.json.JSONArray
+import org.json.JSONException
 import javax.inject.Inject
 
 
@@ -17,15 +20,20 @@ class ProductRepository @Inject constructor(
     private val productDao: ProductDao,
     private val cateriatDao: CategoryDao,
 ) {
-    val products: LiveData<List<Product>> = productDao.getAllProducts()
-    val category: LiveData<List<Category>> = cateriatDao.getAllCategories()
+    val products: Flow<List<Product>> = productDao.getAllProducts()
 
     suspend fun refreshProducts() {
         try {
             val response = productService.getAllProducts()
             if (response.isSuccessful) {
                 response.body()?.let { productList ->
-                    val productEntities = productList.map { it.toProductEntity() }
+                    val cleanedProductList = productList.map { product ->
+                        product.copy(
+                            images = cleanAndParseImageUrls(product.images.joinToString(","))
+                        )
+                    }
+
+                    val productEntities = cleanedProductList.map { it.toProductEntity() }
                     productDao.insertAll(productEntities)
                     val categoryEntities = productList.map { it.category.toCategoryEntity() }
                     cateriatDao.insertCategory(categoryEntities)
@@ -36,10 +44,34 @@ class ProductRepository @Inject constructor(
                     }
                 }
             } else {
-                Log.e("ProductRepository", "Error fetching products: ${response.errorBody()}")
+                Log.e("ProductRepository", "Error al llamar al servicio")
             }
         } catch (e: Exception) {
-            Log.e("ProductRepository", "Exception fetching products", e)
+            Log.e("ProductRepository", "Error implementación", e)
         }
     }
+
+    fun searchProducts(searchQuery: String): Flow<List<Product>> {
+        return productDao.searchProducts("%$searchQuery%")
+    }
+
+    fun cleanAndParseImageUrls(imageData: String): List<String> {
+        val urls = if (imageData.trim().startsWith("[")) {
+            try {
+                JSONArray(imageData).let { jsonArray ->
+                    (0 until jsonArray.length()).map { index -> jsonArray.getString(index) }
+                }
+            } catch (e: JSONException) {
+                emptyList<String>()
+            }
+        } else {
+            imageData.split(",").map { it.trim() }
+        }
+        return urls.map { it.replace("\\", "") }.also { cleanedUrls ->
+            cleanedUrls.forEach { url ->
+                Log.d("ProductRepository", "Muestra de  $url")
+            }
+        }
+    }
+
 }

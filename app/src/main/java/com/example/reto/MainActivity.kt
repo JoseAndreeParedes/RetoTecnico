@@ -23,11 +23,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         setSupportActionBar(binding.toolbar)
-        binding.toolbar.visibility = View.GONE
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -52,4 +52,5 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return true
     }
+
 }

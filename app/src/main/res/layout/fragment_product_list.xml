@@ -12,16 +12,28 @@
             android:layout_height="match_parent"
             tools:context=".ui.produclist.ProductListFragment">
 
-            <androidx.appcompat.widget.SearchView
-
-                android:id="@+id/searchView"
+            <LinearLayout
+                android:id="@+id/buscador"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/sortButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:paddingEnd="10dp"
+                    android:src="@drawable/decendente" />
+            </LinearLayout>
 
 
             <androidx.core.widget.NestedScrollView
@@ -33,7 +45,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/searchView">
+                app:layout_constraintTop_toBottomOf="@+id/buscador">
 
 
                 <androidx.recyclerview.widget.RecyclerView

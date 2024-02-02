@@ -29,18 +29,35 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        displayProductDetails(args.product)
-        val product = args.product
-        binding.lblTitleCentral.text = product.title
+        val product = try {
+            args.product
+        } catch (e: IllegalArgumentException) {
+            null
+        }
+        if (product != null) {
+            displayProductDetails(product)
+        } else {
+            displayEmptyState()
+        }
+        binding.lblTitleCentral.text = product?.title
     }
 
+    private fun displayEmptyState() {
+        binding.apply {
+            lblTitleCentral.visibility = View.GONE
+            tvcodigo.visibility = View.GONE
+            tvprecio.visibility = View.GONE
+            tvdescripcion.visibility = View.GONE
+            imageView.visibility = View.GONE
+        }
+    }
     private fun displayProductDetails(product: Product) {
         binding.apply {
             lblTitleCentral.text = product.title
             Picasso.get().load(product.images.get(0)).into(imageView)
-            textView2.text = "Código:      " + product.id.toString()
-            textView4.text = "Precio:      " + product.price.toString()
-            lblTitleT.text = "Descripción: " + product.description
+            tvcodigo.text = "Código:      " + product.id.toString()
+            tvprecio.text = "Precio:      " + product.price.toString()
+            tvdescripcion.text = "Descripción: " + product.description
         }
     }
 

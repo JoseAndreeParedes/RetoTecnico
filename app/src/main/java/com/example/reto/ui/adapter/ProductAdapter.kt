@@ -16,6 +16,7 @@ class ProductAdapter(private val onProductClickListener: OnProductClickListener)
         fun onProductClicked(product: Product)
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = RowProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(binding, onProductClickListener)
@@ -32,6 +33,7 @@ class ProductAdapter(private val onProductClickListener: OnProductClickListener)
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
+                binding.executePendingBindings()
                 lblProductName.text = product.title
                 lblPrice.text = "$${product.price}"
                 if (!product.images.isNullOrEmpty()) {
